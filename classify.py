@@ -14,33 +14,49 @@ b = chessdata['label']
 # print(a)
 
 data = csv.reader(open('chessboard.csv','rb'), delimiter=",", quotechar='|')
-column1, column2, kcc, label = [], [], [], []
+A1, B1, A0, B0, kcc, label1, label0 = [], [], [], [], [], [], [], []
 
+# print(data)
 for row in data:
-    column1.append(row[0])
-    column2.append(row[1])
     kcc.append([row[0],row[1]])
-    label.append(row[2])
-column1.pop(0)
-column2.pop(0)
-kcc.pop(0)
-label.pop(0)
-print(label)
-# print(column1)
-# print(column2)
+    if row[2]=='0':
+      A0.append(row[0])
+      B0.append(row[0])
+      label0.append(row[2])
+    else:
+      A1.append(row[0])
+      B1.append(row[1])
+      label1.append(row[2])
+A1.pop(0)
+B1.pop(0)
+kcc1.pop(0)
+label1.pop(0)
+A0.pop(0)
+B0.pop(0)
+kcc0.pop(0)
+label0.pop(0)
+# print(label0)
+# print(A0)
+# print(B0)
 
 # scatterplot
-# plt.scatter(column1, column2, label="hello", color='k', s=15, marker=".g")
-# plt.xlabel('column1')
-# plt.ylabel('column2')
-# plt.title("testing graph")
-# plt.legend()
-# plt.show()
+plt.scatter(A1, B1, label="Label: 1", color='blue', s=15)
+plt.scatter(A0, B0, label="Label: 0", color='red', s=15)
+plt.xlabel('A')
+plt.ylabel('B')
+plt.title("chessboard data")
+plt.legend()
+plt.show()
 
 # K Neighbors Classifier
 from sklearn.neighbors import KNeighborsClassifier
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(kcc, label)
+
+from sklearn import svm
+
+from sklearn.model_selection import train_test_split
+
 # print(neigh.predict([[1.1,3]]))
 # print(neigh.predict([[1.1,666663]]))
 
